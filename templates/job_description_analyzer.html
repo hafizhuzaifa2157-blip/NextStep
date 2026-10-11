@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Description Analyzer | Next Step</title>
+<style>
+body{font-family:Arial;background:#f1f5f9;padding:25px;margin:0;color:#1e293b}
+main{max-width:750px;margin:auto;background:white;padding:25px;border-radius:14px}
+h1{color:#263b80}
+textarea{width:100%;min-height:180px;padding:12px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px}
+button{background:#263b80;color:white;border:0;padding:12px 18px;border-radius:8px;margin-top:12px;cursor:pointer}
+.result{background:#eef2ff;padding:16px;border-radius:10px;margin-top:20px;overflow-wrap:anywhere}
+a{color:#263b80}
+</style>
+</head>
+<body>
+<main>
+<h1>Job Description Analyzer</h1>
+<p>Analyze a job description to identify important keywords, education and experience requirements.</p>
+<form method="POST">
+<label for="description"><b>Paste Job Description</b></label><br><br>
+<textarea id="description" name="description" required placeholder="Paste the complete job description here...">{{ description }}</textarea>
+<button type="submit">Analyze Description</button>
+</form>
+{% if description %}
+<div class="result">
+<h2>Analysis Results</h2>
+<h3>Important Keywords</h3>
+{% if keywords %}
+<p>{{ keywords | join(", ") }}</p>
+{% else %}
+<p>No keywords identified.</p>
+{% endif %}
+<h3>Experience Mentioned</h3>
+<p>{{ experience }}</p>
+<h3>Education Mentioned</h3>
+<p>{{ education }}</p>
+</div>
+{% endif %}
+<p><a href="/dashboard">← Back to Dashboard</a></p>
+</main>
+</body>
+</html>

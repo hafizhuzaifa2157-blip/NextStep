@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Step | Build Your Future</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f7fc;
+            color: #203047;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: #fff;
+            padding: 17px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid #e1e9f3;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #183b63;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #284767;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: #e6f1fc;
+        }
+
+        .nav-links .nav-button {
+            background: #285f91;
+            color: white;
+        }
+
+        .hero {
+            padding: 75px 8%;
+            background: linear-gradient(120deg, #e4effb, #f9fbfe 70%);
+            border-bottom: 1px solid #e5edf6;
+        }
+
+        .hero-inner {
+            max-width: 1000px;
+            margin: auto;
+            display: block;
+        }
+
+        .hero-text {
+            max-width: 760px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: white;
+            color: #285f91;
+            border: 1px solid #d5e5f5;
+            padding: 7px 13px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 58px);
+            line-height: 1.13;
+            letter-spacing: -1.5px;
+            color: #183b63;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #3979ad;
+        }
+
+        .hero-text > p {
+            font-size: 17px;
+            color: #536b83;
+            max-width: 590px;
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 13px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 13px 21px;
+            border-radius: 9px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #285f91;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #183f66;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #285f91;
+            border: 1px solid #cbdced;
+        }
+
+        .btn-secondary:hover {
+            background: #eaf3fc;
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: auto;
+            padding: 65px 25px 75px;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 35px;
+        }
+
+        .small-title {
+            color: #3979ad;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+            color: #183b63;
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: #65788d;
+            font-size: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e9f3;
+            border-radius: 15px;
+            padding: 23px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(35, 71, 110, 0.09);
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6f1fc;
+            border-radius: 12px;
+            font-size: 22px;
+            margin-bottom: 17px;
+        }
+
+        .card h3 {
+            font-size: 17px;
+            color: #203e5e;
+            margin-bottom: 9px;
+        }
+
+        .card p {
+            color: #65788d;
+            font-size: 14px;
+            margin-bottom: 19px;
+            flex-grow: 1;
+        }
+
+        .card-link {
+            color: #285f91;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .card-link:hover {
+            color: #183f66;
+            text-decoration: underline;
+        }
+
+        .bottom-cta {
+            background: #e4effb;
+            border-top: 1px solid #d5e5f5;
+            border-bottom: 1px solid #d5e5f5;
+            padding: 42px 20px;
+            text-align: center;
+        }
+
+        .bottom-cta h2 {
+            color: #183b63;
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .bottom-cta p {
+            color: #536b83;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 23px 15px;
+            background: #183047;
+            color: #e5edf6;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                padding: 55px 6%;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 550px) {
+            nav {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .nav-links {
+                gap: 2px;
+            }
+
+            .nav-links a {
+                padding: 9px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 43px 6%;
+            }
+
+            .hero h1 {
+                font-size: 39px;
+            }
+
+            .hero-text > p {
+                font-size: 15px;
+            }
+
+            .features {
+                padding: 45px 17px 55px;
+            }
+
+            .section-heading h2 {
+                font-size: 27px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Next Step</div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('dashboard') }}" class="nav-button">
+                Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="eyebrow">
+                    YOUR CAREER JOURNEY STARTS HERE
+                </div>
+
+                <h1>
+                    From Beginner<br>
+                    to <span>Professional.</span>
+                </h1>
+
+                <p>
+                    Understand your skills, build a stronger CV,
+                    explore career opportunities, and discover the
+                    next steps toward your professional future.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-primary"
+                       href="{{ url_for('dashboard') }}">
+                        Explore Your Tools →
+                    </a>
+
+                    <a class="btn btn-secondary" href="#features">
+                        Discover Features
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-heading">
+            <div class="small-title">Explore Next Step</div>
+            <h2>Tools for Your Future</h2>
+            <p>
+                Ten useful tools to help you understand your CV,
+                develop your skills, and plan your career journey.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-icon">📄</div>
+                <h3>CV Builder</h3>
+                <p>Create and organize your CV with your education, skills, and projects.</p>
+                <a class="card-link" href="{{ url_for('cv_builder') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔎</div>
+                <h3>CV Analyzer</h3>
+                <p>Review your CV and identify sections that may need improvement.</p>
+                <a class="card-link" href="{{ url_for('cv_analyzer') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <h3>ATS-Friendly CV Check</h3>
+                <p>Compare CV keywords with the requirements in a job description.</p>
+                <a class="card-link" href="{{ url_for('ats_check') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">✨</div>
+                <h3>CV Improvement</h3>
+                <p>Get practical suggestions to improve your CV content.</p>
+                <a class="card-link" href="{{ url_for('cv_improvement') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">💼</div>
+                <h3>Job Recommendations</h3>
+                <p>Explore career and job ideas for your chosen skill level.</p>
+                <a class="card-link" href="{{ url_for('job_recommendations') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Job Matching Score</h3>
+                <p>Compare your current skills with a job's requirements.</p>
+                <a class="card-link" href="{{ url_for('job_matching') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📝</div>
+                <h3>Job Description Analyzer</h3>
+                <p>Understand the important skills and requirements in a job listing.</p>
+                <a class="card-link" href="{{ url_for('job_description_analyzer') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔑</div>
+                <h3>Missing Keywords Analyzer</h3>
+                <p>Find relevant job keywords that may be missing from your CV.</p>
+                <a class="card-link" href="{{url_for('missing_keywords_analyzer') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🧩</div>
+                <h3>Skill Gap Analysis</h3>
+                <p>Identify skills to develop for your chosen career direction.</p>
+                <a class="card-link" href="{{ url_for('skill_gap_analysis') }}">Explore tool →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <h3>Learning Roadmap</h3>
+                <p>Explore a step-by-step learning path for your goals.</p>
+                <a class="card-link" href="{{ url_for('learning_roadmap') }}">Explore tool →</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bottom-cta">
+        <h2>Ready to Take the Next Step?</h2>
+        <p>Start exploring your tools and plan what you want to learn next.</p>
+        <a class="btn btn-primary" href="{{ url_for('dashboard') }}">
+            Go to Dashboard →
+        </a>
+    </section>
+
+    <footer>
+        Next Step © 2026 | Build your skills. Plan your future.
+    </footer>
+
+</body>
+</html>

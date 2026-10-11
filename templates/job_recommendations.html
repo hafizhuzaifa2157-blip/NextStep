@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Recommendations | Next Step</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 30px 16px;
+            font-family: Arial, sans-serif;
+            background: #f3f7fc;
+            color: #203047;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .panel, .job {
+            background: white;
+            border: 1px solid #dce7f3;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        h1, h2 { color: #183b63; }
+
+        .intro { color: #5c7087; }
+
+        label {
+            display: block;
+            margin: 18px 0 7px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbdced;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+
+        button {
+            margin-top: 22px;
+            padding: 13px 20px;
+            background: #285f91;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover { background: #183f66; }
+
+        .job h3 { color: #285f91; }
+        .level { color: #536b83; font-size: 14px; }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #285f91;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <a class="back" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+
+    <div class="panel">
+        <h1>Job Recommendations</h1>
+        <p class="intro">
+            Tell us which career you want to pursue and choose your current skill level.
+        </p>
+
+        <form method="POST">
+            <label for="career">What career do you want to pursue?</label>
+            <input
+                type="text"
+                id="career"
+                name="career"
+                placeholder="e.g. Python Developer, Web Designer, Data Analyst"
+                value="{{ career }}"
+                required
+            >
+
+            <label for="level">Choose your current level</label>
+            <select id="level" name="level" required>
+                <option value="" disabled {% if not level %}selected{% endif %}>
+                    Select your level
+                </option>
+                <option value="Beginner" {% if level == 'Beginner' %}selected{% endif %}>
+                    Beginner
+                </option>
+                <option value="Intermediate" {% if level == 'Intermediate' %}selected{% endif %}>
+                    Intermediate
+                </option>
+                <option value="Advanced" {% if level == 'Advanced' %}selected{% endif %}>
+                    Advanced
+                </option>
+            </select>
+
+            <button type="submit">Find Recommendations</button>
+        </form>
+    </div>
+
+    
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+{% if jobs %}
+    <h2>Job Results for {{ career }}</h2>
+
+    {% for job in jobs %}
+        <div class="job">
+            <h3>{{ job.title }}</h3>
+            <p><strong>Company:</strong> {{ job.company }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+            <p><strong>Salary:</strong> {{ job.salary }}</p>
+            <p><strong>Your level:</strong> {{ job.level }}</p>
+            <a href="{{ job.url }}" target="_blank" rel="noopener">
+                View Job and Apply →
+            </a>
+        </div>
+    {% endfor %}
+{% elif request.method == 'POST' and not error %}
+    <p>No matching jobs found. Try another career name.</p>
+{% endif %}
+</div>
+</body>
+</html>

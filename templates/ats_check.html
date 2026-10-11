@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ATS-Friendly CV Check | Next Step</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f5fb;
+            color: #202943;
+            padding: 24px;
+            margin: 0;
+        }
+
+        main {
+            max-width: 760px;
+            margin: 25px auto;
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 5px 24px #17255415;
+        }
+
+        h1 {
+            color: #5146d8;
+        }
+
+        label {
+            display: block;
+            margin-top: 22px;
+        }
+
+        input[type="file"], textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccd2e2;
+            border-radius: 8px;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        button {
+            background: #5146d8;
+            color: white;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f3f5fb;
+            border-radius: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .error { color: #b42318; }
+        .success { color: #167443; }
+        a { color: #5146d8; }
+    </style>
+</head>
+
+<body>
+<main>
+    <a href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+
+    <h1>ATS-Friendly CV Check</h1>
+    <p>Upload your CV and compare it with a job description.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="cv_file">
+            <b>Upload Your CV</b>
+        </label>
+
+        <input
+            type="file"
+            id="cv_file"
+            name="cv_file"
+            accept=".pdf,.docx,.txt"
+            required
+        >
+
+        <small>Supported formats: PDF, DOCX and TXT.</small>
+
+        <label for="job_description">
+            <b>Job Description</b>
+        </label>
+
+        <textarea
+            id="job_description"
+            name="job_description"
+            placeholder="Paste the job description here..."
+            required
+        ></textarea>
+
+        <button type="submit">Check ATS Score</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if result %}
+        <div class="result">
+            <h2>ATS Score: {{ result.score }}/100</h2>
+
+            <h3>Matched Keywords</h3>
+            {% if result.matched_keywords %}
+                <ul>
+                {% for keyword in result.matched_keywords %}
+                    <li class="success">{{ keyword }} ✓</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No matching keywords found.</p>
+            {% endif %}
+
+            <h3>Missing Keywords</h3>
+            {% if result.missing_keywords %}
+                <ul>
+                {% for keyword in result.missing_keywords %}
+                    <li class="error">{{ keyword }} ✗</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p class="success">No missing tracked keywords.</p>
+            {% endif %}
+
+            <h3>CV Sections</h3>
+            <ul>
+            {% for section, present in result.sections.items() %}
+                <li>
+                    {{ section }}:
+                    {% if present %}
+                        Present ✓
+                    {% else %}
+                        Not detected — please check your CV.
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</main>
+</body>
+</html>

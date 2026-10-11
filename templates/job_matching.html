@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job Matching Score | Next Step</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px 15px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px #0001;
+        }
+
+        h1 {
+            color: #263b80;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 20px 0 8px;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #fff;
+            font: inherit;
+        }
+
+        input[type="file"] {
+            background: #f8fafc;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 7px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            background: #263b80;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e2f68;
+        }
+
+        .result {
+            background: #eef2ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        .score {
+            color: #263b80;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            background: #fff1f2;
+            color: #9f1239;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 22px;
+            color: #263b80;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Job Matching Score</h1>
+
+    <p class="subtitle">
+        Upload your CV and paste a job description to discover
+        how well your qualifications match the job.
+    </p>
+
+    {% if error %}
+        <div class="message">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST"
+          enctype="multipart/form-data">
+
+        <label for="cv_file">Upload Your CV</label>
+
+        <input
+            type="file"
+            id="cv_file"
+            name="cv_file"
+            accept=".pdf,.docx,.txt"
+            required
+        >
+
+        <p class="hint">
+            Supported formats: PDF, DOCX and TXT.
+        </p>
+
+        <label for="job_description">
+            Job Description
+        </label>
+
+        <textarea
+            id="job_description"
+            name="job_description"
+            placeholder="Paste the complete job description here..."
+            required
+        >{{ job_description or '' }}</textarea>
+
+        <button type="submit">
+            Calculate Match Score
+        </button>
+
+    </form>
+
+    {% if score is not none %}
+
+    <div class="result">
+
+        <h2>Your Job Matching Score</h2>
+
+        <div class="score">{{ score }}%</div>
+
+        <p>
+            This score estimates the keyword overlap between
+            your CV and the job description.
+        </p>
+
+        <h3>Matched Keywords</h3>
+
+        {% if matched %}
+            <p>{{ matched | join(", ") }}</p>
+        {% else %}
+            <p>No matching keywords found.</p>
+        {% endif %}
+
+        <h3>Missing Keywords</h3>
+
+        {% if missing %}
+            <p>{{ missing | join(", ") }}</p>
+        {% else %}
+            <p>All checked keywords were matched.</p>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+    <a class="back-link" href="/dashboard">
+        &larr; Back to Dashboard
+    </a>
+
+</div>
+</body>
+</html>

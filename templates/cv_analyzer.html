@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Analyzer | NextStep</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        nav {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: #60a5fa;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        .upload-box {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px dashed #93c5fd;
+        }
+
+        .upload-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .upload-box p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 12px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .analyze-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .analyze-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            display: none;
+            margin-top: 35px;
+        }
+
+        .result h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+        }
+
+        .score {
+            font-size: 38px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+        }
+
+        .success {
+            color: #16a34a;
+        }
+
+        .warning {
+            color: #d97706;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>NextStep</h2>
+
+    <div>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>CV Analyzer</h1>
+        <p>Upload your CV and discover how ready it is for your next career opportunity.</p>
+    </div>
+
+    <div class="upload-box">
+
+        <h2>Analyze Your CV</h2>
+
+        <p>
+            Upload your CV and NextStep will review its structure,
+            skills, experience and important sections.
+        </p>
+
+        <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+
+        <br>
+
+        <button class="analyze-btn" onclick="analyzeCV()">
+            Analyze My CV
+        </button>
+
+        <p id="fileMessage"></p>
+
+    </div>
+
+    <div class="result" id="result">
+
+        <h2>CV Analysis Report</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>CV Score</h3>
+                <div class="score">82%</div>
+                <p class="success">Good CV strength</p>
+            </div>
+
+            <div class="card">
+                <h3>Skills Detected</h3>
+                <ul>
+                    <li>Python</li>
+                    <li>HTML & CSS</li>
+                    <li>JavaScript</li>
+                    <li>Communication</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Strong Sections</h3>
+                <ul>
+                    <li>Education</li>
+                    <li>Skills</li>
+                    <li>Projects</li>
+                    <li>Experience</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Missing Areas</h3>
+                <ul>
+                    <li>Certifications</li>
+                    <li>Achievements</li>
+                    <li>Professional Summary</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="card suggestions">
+            <h3>💡 Improvement Suggestions</h3>
+
+            <ul>
+                <li>Add a strong professional summary.</li>
+                <li>Include measurable achievements.</li>
+                <li>Add relevant certifications.</li>
+                <li>Use keywords related to your target job.</li>
+                <li>Keep your CV clean and ATS-friendly.</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function analyzeCV() {
+
+    const file = document.getElementById("cvFile").files[0];
+    const message = document.getElementById("fileMessage");
+    const result = document.getElementById("result");
+
+    if (!file) {
+        message.innerHTML = "Please select your CV first.";
+        message.className = "warning";
+        return;
+    }
+
+    message.innerHTML = "CV uploaded successfully!";
+    message.className = "success";
+
+    result.style.display = "block";
+
+    result.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+</body>
+</html>

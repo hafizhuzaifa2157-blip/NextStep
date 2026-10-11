@@ -1,0 +1,217 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skill Gap Analysis | Next Step</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            padding: 25px;
+            margin: 0;
+            color: #1e293b;
+        }
+
+        main {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            color: #263b80;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font: inherit;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: 2px solid #818cf8;
+            border-color: #263b80;
+        }
+
+        button {
+            background: #263b80;
+            color: white;
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1e2e68;
+        }
+
+        .result {
+            background: #eef2ff;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 24px;
+            overflow-wrap: anywhere;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 14px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #263b80;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: #dbe3f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #263b80;
+            transition: width 0.3s ease;
+        }
+
+        .error {
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        a {
+            color: #263b80;
+        }
+
+        small {
+            color: #475569;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            main {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main>
+    <h1>Skill Gap Analysis</h1>
+    <p>Compare your current skills with the skills required for your target job.</p>
+
+    <form method="POST" action="{{ url_for('skill_gap') }}">
+        <label for="current_skills"><b>Your Current Skills</b></label>
+        <br><br>
+
+        <textarea
+            id="current_skills"
+            name="current_skills"
+            required
+            placeholder="Python, HTML, CSS"
+        >{{ current_skills | default('', true) }}</textarea>
+
+        <br><br>
+
+        <label for="required_skills">
+            <b>Skills Required for Your Target Job</b>
+        </label>
+        <br><br>
+
+        <textarea
+            id="required_skills"
+            name="required_skills"
+            required
+            placeholder="Python, Flask, SQL, Git"
+        >{{ required_skills | default('', true) }}</textarea>
+
+        <button type="submit">Analyze Skill Gaps</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if required_skills and not error %}
+    <section class="result">
+        <h2>Your Results</h2>
+
+        <p><b>Skill Match:</b> {{ progress | default(0, true) }}%</p>
+
+        <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Skill match percentage"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="{{ progress | default(0, true) }}"
+        >
+            <div
+                class="progress-fill"
+                style="width: {{ [[progress | default(0, true) | int, 0] | max, 100] | min }}%;"
+            ></div>
+        </div>
+
+        <h3>Skills You Already Have</h3>
+
+        {% if present %}
+            <p>{{ present | join(", ") }}</p>
+        {% else %}
+            <p>No exact matches found. Check your spelling and skill names.</p>
+        {% endif %}
+
+        <h3>Skills to Learn</h3>
+
+        {% if gaps %}
+            {% for item in gaps %}
+                <div class="skill-card">
+                    <h4>{{ item.name | title }}</h4>
+                    <p><b>Priority:</b> {{ item.priority }}</p>
+                    <p><b>Recommended Action:</b> {{ item.task }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>All listed required skills match your current skills!</p>
+        {% endif %}
+
+        {% if roadmap %}
+            <h3>Your Learning Action Plan</h3>
+
+            {% for item in roadmap %}
+                <div class="skill-card">
+                    <b>{{ item.name | title }}</b>
+                    <p>{{ item.task }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+    {% endif %}
+
+    <p><a href="{{ url_for('dashboard') }}">&larr; Back to Dashboard</a></p>
+</main>
+</body>
+</html>
+```

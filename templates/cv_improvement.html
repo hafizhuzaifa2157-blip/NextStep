@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CV Improvement | Next Step</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f5fb;
+            padding: 25px;
+            color: #202943;
+        }
+
+        main {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 220px;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #d0d5e2;
+            border-radius: 7px;
+            font-family: Arial, sans-serif;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 12px 0 20px;
+            max-width: 100%;
+        }
+
+        button {
+            background: #5146d8;
+            color: white;
+            border: 0;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #4035b8;
+        }
+
+        .error {
+            color: #b42318;
+            margin: 12px 0;
+        }
+
+        .suggestions {
+            margin-top: 25px;
+            padding: 18px;
+            background: #f3f5fb;
+            border-radius: 10px;
+        }
+
+        .suggestions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <a href="{{ url_for('dashboard') }}">← Dashboard</a>
+
+        <h1>✨ CV Improvement</h1>
+
+        <p>
+            Upload your CV or paste its text to receive
+            improvement suggestions.
+        </p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <label for="cv_file">
+                <strong>Upload Your CV (PDF, DOCX, or TXT)</strong>
+            </label>
+
+            <input
+                type="file"
+                id="cv_file"
+                name="cv_file"
+                accept=".pdf,.docx,.txt"
+            >
+
+            <p>Or paste your CV text below (optional):</p>
+
+            <textarea
+                name="cv_text"
+                placeholder="Paste your CV text here..."
+            ></textarea>
+
+            <button type="submit">Improve My CV</button>
+        </form>
+
+        {% if suggestions %}
+            <section class="suggestions">
+                <h2>CV Improvement Suggestions</h2>
+
+                <ul>
+                    {% for suggestion in suggestions %}
+                        <li>{{ suggestion }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>

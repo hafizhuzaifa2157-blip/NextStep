@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missing Keywords Analyzer | Next Step</title>
+<style>
+body{font-family:Arial;background:#f1f5f9;padding:25px;margin:0;color:#1e293b}
+main{max-width:750px;margin:auto;background:white;padding:25px;border-radius:14px}
+h1{color:#263b80}
+input,textarea{width:100%;padding:12px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px}
+textarea{min-height:150px}
+button{background:#263b80;color:white;padding:12px 18px;border:0;border-radius:8px;margin-top:15px;cursor:pointer}
+.result{background:#eef2ff;padding:16px;border-radius:10px;margin-top:20px;overflow-wrap:anywhere}
+.error{background:#fff1f2;color:#9f1239;padding:12px;border-radius:8px}
+a{color:#263b80}
+</style>
+</head>
+<body>
+<main>
+<h1>Missing Keywords Analyzer</h1>
+<p>Upload your CV and compare it with the skills and keywords in a job description.</p>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+<form method="POST" enctype="multipart/form-data">
+<label for="cv_file"><b>Upload Your CV</b></label><br><br>
+<input id="cv_file" type="file" name="cv_file" accept=".pdf,.docx,.txt" required>
+<p>Supported formats: PDF, DOCX and TXT.</p>
+<label for="job_description"><b>Job Description</b></label><br><br>
+<textarea id="job_description" name="job_description" required placeholder="Paste the job description here...">{{ job_description }}</textarea>
+<button type="submit">Find Missing Keywords</button>
+</form>
+{% if not error and (matched or missing) %}
+<div class="result">
+<h2>Analysis Results</h2>
+<h3>Keywords Found in Your CV</h3>
+{% if matched %}<p>{{ matched | join(", ") }}</p>{% else %}<p>No matching keywords found.</p>{% endif %}
+<h3>Keywords Missing from Your CV</h3>
+{% if missing %}<p>{{ missing | join(", ") }}</p>{% else %}<p>No missing keywords identified.</p>{% endif %}
+<p>Only add skills to your CV that you genuinely possess.</p>
+</div>
+{% endif %}
+<p><a href="/dashboard">← Back to Dashboard</a></p>
+</main>
+</body>
+</html>

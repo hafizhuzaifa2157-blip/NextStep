@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Step | Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f7fc;
+            color: #203047;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid #e1e9f3;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #183b63;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #284767;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: #e4effb;
+            color: #174f86;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: linear-gradient(120deg, #dcecfb, #f7fbff);
+            border: 1px solid #d5e5f5;
+            border-radius: 18px;
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+            color: #183b63;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #536b83;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .section-title {
+            font-size: 23px;
+            margin-bottom: 20px;
+            color: #203e5e;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e9f3;
+            border-radius: 14px;
+            padding: 23px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(35, 71, 110, 0.10);
+        }
+
+        .number {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            background: #e6f1fc;
+            color: #245b8d;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #203e5e;
+        }
+
+        .card p {
+            color: #65788d;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 45px;
+            margin-bottom: 18px;
+        }
+
+        .card a {
+            display: inline-block;
+            background: #285f91;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            background: #183f66;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            nav {
+                padding: 16px 5%;
+            }
+
+            .container {
+                margin-top: 22px;
+                padding: 0 14px;
+            }
+
+            .welcome {
+                padding: 24px;
+            }
+
+            .welcome h1 {
+                font-size: 26px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Next Step</div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('dashboard') }}" class="active">Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>
+                From beginner to professional.
+                Explore tools to build your CV, understand your skills,
+                discover suitable jobs, and plan your career journey.
+            </p>
+        </section>
+
+        <h2 class="section-title">Your Career Tools</h2>
+
+        <section class="features">
+
+            <div class="card">
+                <span class="number">01</span>
+                <h3>CV Builder</h3>
+                <p>Create and organize your CV with your education, skills, and projects.</p>
+                <a href="{{ url_for('cv_builder') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">02</span>
+                <h3>CV Analyzer</h3>
+                <p>Review your CV and identify sections that may need improvement.</p>
+                <a href="{{ url_for('cv_analyzer') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">03</span>
+                <h3>ATS-Friendly CV Check</h3>
+                <p>Check how your CV matches important terms in a job description.</p>
+                <a href="{{ url_for('ats_check') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">04</span>
+                <h3>CV Improvement</h3>
+                <p>Get rule-based suggestions to improve your CV content.</p>
+                <a href="{{ url_for('cv_improvement') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">05</span>
+                <h3>Job Recommendations</h3>
+                <p>Explore job ideas that relate to your skills and experience level.</p>
+                <a href="{{ url_for('job_recommendations') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">06</span>
+                <h3>Job Matching Score</h3>
+                <p>Compare your skills with the requirements of a target job.</p>
+                <a href="{{ url_for('job_matching') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">07</span>
+                <h3>Job Description Analyzer</h3>
+                <p>Identify key skills and requirements mentioned in a job listing.</p>
+                <a href="{{ url_for('job_description_analyzer') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">08</span>
+                <h3>Missing Keywords Analyzer</h3>
+                <p>Find relevant keywords from a job description that your CV may lack.</p>
+                <a href="{{ url_for('missing_keywords_analyzer') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">09</span>
+                <h3>Skill Gap Analysis</h3>
+                <p>Compare your current skills with the skills needed for your goal.</p>
+                <a href="{{ url_for('skill_gap_analysis') }}">Open Tool</a>
+            </div>
+
+            <div class="card">
+                <span class="number">10</span>
+                <h3>Learning Roadmap</h3>
+                <p>Explore learning steps to develop skills for your chosen career.</p>
+                <a href="{{ url_for('learning_roadmap') }}">Open Tool</a>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        Next Step — Build your skills. Plan your future.
+    </footer>
+
+</body>
+</html>
+
+<a href="{{ url_for('home') }}">Home</a>
+
+
+
